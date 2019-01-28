@@ -20,18 +20,19 @@ const store = (function(){
     this.items = this.items.filter(item => item.id !== id);
   };
 
-const findAndUpdate= function(id, newData){
-  let foundItem = {};
-  this.items.find(function(element){
-     if( element.id == id){
-     foundItem = element
-     }
-  })
-  console.log(foundItem, newData);
+  const findAndUpdate = function(id, newData){
+    console.log(newData, id);
+    let foundItem = {};
+    this.items.find(function(element){
+      if(element.id === id){
+        foundItem = element;
+      }
+    });
+    console.log(foundItem, newData);
   
-  Object.assign(foundItem, newData.name);
-  console.log(newData.name)
-}
+    Object.assign(foundItem, newData);
+    console.log(newData.name);
+  };
 
   // const findAndUpdateName = function(id, name) {
   //   try {
@@ -60,10 +61,9 @@ const findAndUpdate= function(id, newData){
     items: [],
     hideCheckedItems: false,
     searchTerm: '',
-
     addItem,
     findById,
-   // findAndToggleChecked,
+    // findAndToggleChecked,
     findAndDelete,
     //findAndUpdateName,
     toggleCheckedFilter,

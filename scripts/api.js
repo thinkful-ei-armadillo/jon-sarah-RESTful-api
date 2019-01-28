@@ -31,10 +31,21 @@ const api = (function(){
     });
   }
 
+  function deleteItem(id) {
+    return fetch(`${BASE_URL}/items/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type' : 'apllication/json'
+      },
+      body: JSON.stringify(id)
+    });
+  }
+
   return {
     getItems,
     createItem,
-    updateItem
+    updateItem,
+    deleteItem
   };
 
 }());
