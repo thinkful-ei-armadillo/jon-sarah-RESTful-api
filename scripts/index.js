@@ -6,12 +6,25 @@ $(document).ready(function() {
   shoppingList.bindEventListeners();
   shoppingList.render();
 
+  // add shopping item
   api.getItems()
     .then(res => res.json())
-    .then((items)=> {
-      items.forEach((item => store.addItem(item)))
+    .then((items) => {
+      items.forEach((item => store.addItem(item)));
       shoppingList.render();
-    })
+    });
+  
+  // edit shopping item
+  api.getItems()
+    .then(res => res.json())
+    .then((items) => {
+      const item = items[0];
+      return api.updateItem(item.id, {name: 'foobar'})
+        .then(() => {
+          console.log('updated');
+          shoppingList.render();
+        });
+    });
 });
 
 store.items.push(Item.create('apples'));
