@@ -9,9 +9,16 @@ $(document).ready(function() {
   // add shopping item
   api.getItems()
     .then(res => res.json())
+    .then(() => {
+      const item= (store.items[0])
+      console.log('current name: ' + item.name)
+      store.findAndUpdate(item.id, {name: 'foobar'})
+      console.log('new name: ' + item.name)
+  })
     .then((items) => {
       items.forEach((item => store.addItem(item)));
       shoppingList.render();
+      
     });
   
   // edit shopping item
