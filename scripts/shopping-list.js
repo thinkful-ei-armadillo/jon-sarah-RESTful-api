@@ -51,7 +51,11 @@ const shoppingList = (function(){
     // Filter item list if store prop `searchTerm` is not empty
     if (store.searchTerm) {
       items = items.filter(item => item.name.includes(store.searchTerm));
+    
     }
+    // if(store.searchTerm === undefined){
+    //   throw "Please add a name";
+    // }
   
     // render the shopping list in the DOM
     console.log('`render` ran');
@@ -71,7 +75,8 @@ const shoppingList = (function(){
         .then((newItem) => {
           store.addItem(newItem);
           render();
-        });
+        })
+        .catch(err => console.error(err.message))
     });
   }
   
@@ -96,7 +101,8 @@ const shoppingList = (function(){
         .then(() => {
           store.findAndUpdate(id, {checked: !item.checked});
           render();
-        });
+        })
+        .catch(err => console.error(err.message))
       //store.findAndToggleChecked(id);
     });
   }
@@ -118,7 +124,8 @@ const shoppingList = (function(){
         .then(() => {
           store.findAndDelete(id);
           render();
-        });   
+        })  
+        .catch(err => console.error(err.message))
     });
   }
   
@@ -141,7 +148,8 @@ const shoppingList = (function(){
           store.findAndUpdate(id, {name: itemName});
           store.setItemIsEditing(id, false);
           render();
-        });
+        })
+        .catch(err => console.error(err.message))
     });
   }
   

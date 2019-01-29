@@ -21,7 +21,7 @@ const api = (function(){
   }
 
   function getItems() {
-    return handleError(fetch(`${BASE_URL}/items`));
+    return fetch(`${BASE_URL}/items`);
   }
 
   /* function getItems() {
@@ -32,12 +32,12 @@ const api = (function(){
     const newItem = JSON.stringify({
       name: name
     });
-    return fetch(`${BASE_URL}/items`, {
+    return handleError(fetch(`${BASE_URL}/items`, {
       method: 'POST',
       headers : {
         'Content-Type' : 'application/json',
       },
-      body: newItem});
+      body: newItem}));
      
   }
 
@@ -68,7 +68,8 @@ const api = (function(){
     getItems,
     createItem,
     updateItem,
-    deleteItem
+    deleteItem,
+    // handleError,
   };
 
 }());
