@@ -4,28 +4,41 @@ const api = (function(){
   
   const BASE_URL = `https://thinkful-list-api.herokuapp.com/jon-sarah`;
   
-  function handleError(...args) {
+  function apiFetch(...args) {
     let error = false;
-    return fetch(args)
+    return fetch(...args)
       .then(res => {
-        if(!res.ok) {
+        if (!res.ok) {
           error = true;
-        } 
+        }
         return res.json();
       })
-      .then(res => {
-        if(error) throw new Error(res.message);
-        return res;
+      .then(data => {
+        if (error) throw new Error(data.message);
+        return data;
       })
-      .catch(err => console.error(err));
+      .catch(err => console.log(err.message));
   }
 
+
   function getItems() {
-    return handleError(fetch(`${BASE_URL}/items`));
+    return apiFetch(`${BASE_URL}/items`);
   }
 
   /* function getItems() {
-    return fetch(`${BASE_URL}/items`);
+    let error = false;
+    return fetch(`${BASE_URL}/items`)
+      .then(res => {
+        if (!res.ok) {
+          error = true;
+        }
+        return res.json();
+      })
+      .then(data => {
+        if(error) throw new Error(data.message);
+        return data;
+      })
+      .catch(err => console.log(err.message));
   } */
 
   function createItem(name){
@@ -68,7 +81,7 @@ const api = (function(){
     getItems,
     createItem,
     updateItem,
-    deleteItem
+    deleteItem,
   };
 
 }());
