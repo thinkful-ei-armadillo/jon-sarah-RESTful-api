@@ -22,7 +22,11 @@ const api = (function(){
 
 
   function getItems() {
+ error-handling-function
     return apiFetch(`${BASE_URL}/items`);
+=======
+    return fetch(`${BASE_URL}/items`);
+ with-store
   }
 
 
@@ -30,12 +34,16 @@ const api = (function(){
     const newItem = JSON.stringify({
       name: name
     });
+error-handling-function
     return apiFetch(`${BASE_URL}/items`, {
+
+    return handleError(fetch(`${BASE_URL}/items`, {
+ with-store
       method: 'POST',
       headers : {
         'Content-Type' : 'application/json',
       },
-      body: newItem});
+      body: newItem}));
      
   }
 
@@ -67,6 +75,10 @@ const api = (function(){
     createItem,
     updateItem,
     deleteItem,
+ error-handling-function
+
+    // handleError,
+ with-store
   };
 
 }());
