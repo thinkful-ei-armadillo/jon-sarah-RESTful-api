@@ -67,7 +67,6 @@ const shoppingList = (function(){
       const newItemName = $('.js-shopping-list-entry').val();
       $('.js-shopping-list-entry').val('');
       api.createItem(newItemName)
-        .then(res => res.json())
         .then((newItem) => {
           store.addItem(newItem);
           render();
@@ -86,13 +85,6 @@ const shoppingList = (function(){
       const id = getItemIdFromElement(event.currentTarget);
       const item = store.findById(id);
       api.updateItem(id, {checked: !item.checked})
-        .then(res => {
-          if(!res.ok) {
-            console.log(res);
-          } else {
-            return res.json();
-          }
-        })
         .then(() => {
           store.findAndUpdate(id, {checked: !item.checked});
           render();
@@ -108,13 +100,6 @@ const shoppingList = (function(){
       const id = getItemIdFromElement(event.currentTarget);
       // delete the item
       api.deleteItem(id)
-        .then(res => {
-          if(!res.ok) {
-            console.log(res);
-          } else {
-            return res.json();
-          }
-        })
         .then(() => {
           store.findAndDelete(id);
           render();
@@ -130,13 +115,6 @@ const shoppingList = (function(){
       console.log(id, itemName);
       //changed to be findAndUpdate from findAndUpdateName
       api.updateItem(id, itemName)
-        .then(res => {
-          if(!res.ok) {
-            console.log(res);
-          } else {
-            return res.json();
-          }
-        })
         .then(() => {
           store.findAndUpdate(id, {name: itemName});
           store.setItemIsEditing(id, false);
