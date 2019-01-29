@@ -127,13 +127,30 @@ const shoppingList = (function(){
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
+      console.log(id, itemName);
       //changed to be findAndUpdate from findAndUpdateName
-      store.findAndUpdate(id, itemName);
-      store.setItemIsEditing(id, false);
-      render();
+      api.updateItem(id, itemName)
+        .then(res => {
+          if(!res.ok) {
+            console.log(res);
+          } else {
+            return res.json();
+          }
+        })
+        .then(() => {
+          store.findAndUpdate(id, {name: itemName});
+          store.setItemIsEditing(id, false);
+          render();
+        });
     });
   }
   
+  /* .then()
+      store.findAndUpdate(id, itemName);
+store.setItemIsEditing(id, false)
+
+render(); */
+
   function handleToggleFilterClick() {
     $('.js-filter-checked').click(() => {
       store.toggleCheckedFilter();

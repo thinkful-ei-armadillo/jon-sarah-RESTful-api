@@ -4,13 +4,33 @@ const api = (function(){
   
   const BASE_URL = `https://thinkful-list-api.herokuapp.com/jon-sarah`;
   
-  function getItems() {
-    return fetch(`${BASE_URL}/items`);
+  function handleError(...args) {
+    let error = false;
+    return fetch(args)
+      .then(res => {
+        if(!res.ok) {
+          error = true;
+        } 
+        return res.json();
+      })
+      .then(res => {
+        if(error) throw new Error(res.message);
+        return res;
+      })
+      .catch(err => console.error(err));
   }
+
+  function getItems() {
+    return handleError(fetch(`${BASE_URL}/items`));
+  }
+
+  /* function getItems() {
+    return fetch(`${BASE_URL}/items`);
+  } */
 
   function createItem(name){
     const newItem = JSON.stringify({
-      name: name,
+      name: name
     });
     return fetch(`${BASE_URL}/items`, {
       method: 'POST',
@@ -22,12 +42,15 @@ const api = (function(){
   }
 
   function updateItem(id, updateData) {
+    let updatedData = JSON.stringify({
+      name: updateData
+    }); 
     return fetch(`${BASE_URL}/items/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type' : 'application/json'
       },
-      body: JSON.stringify(updateData)
+      body: updatedData
     });
   }
 
@@ -35,9 +58,9 @@ const api = (function(){
     return fetch(`${BASE_URL}/items/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type' : 'apllication/json'
+        'Content-Type' : 'application/json'
       },
-      body: JSON.stringify(id)
+      body: JSON.stringify({id})
     });
   }
 

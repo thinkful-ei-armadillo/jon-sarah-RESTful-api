@@ -31,7 +31,7 @@ const store = (function(){
     console.log(foundItem, newData);
   
     Object.assign(foundItem, newData);
-    console.log(newData.name);
+    console.log(newData);
   };
 
   // const findAndUpdateName = function(id, name) {
