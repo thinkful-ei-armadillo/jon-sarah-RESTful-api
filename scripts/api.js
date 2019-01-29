@@ -25,27 +25,12 @@ const api = (function(){
     return apiFetch(`${BASE_URL}/items`);
   }
 
-  /* function getItems() {
-    let error = false;
-    return fetch(`${BASE_URL}/items`)
-      .then(res => {
-        if (!res.ok) {
-          error = true;
-        }
-        return res.json();
-      })
-      .then(data => {
-        if(error) throw new Error(data.message);
-        return data;
-      })
-      .catch(err => console.log(err.message));
-  } */
 
   function createItem(name){
     const newItem = JSON.stringify({
       name: name
     });
-    return fetch(`${BASE_URL}/items`, {
+    return apiFetch(`${BASE_URL}/items`, {
       method: 'POST',
       headers : {
         'Content-Type' : 'application/json',
@@ -58,7 +43,7 @@ const api = (function(){
     let updatedData = JSON.stringify({
       name: updateData
     }); 
-    return fetch(`${BASE_URL}/items/${id}`, {
+    return apiFetch(`${BASE_URL}/items/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type' : 'application/json'
@@ -68,7 +53,7 @@ const api = (function(){
   }
 
   function deleteItem(id) {
-    return fetch(`${BASE_URL}/items/${id}`, {
+    return apiFetch(`${BASE_URL}/items/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type' : 'application/json'
